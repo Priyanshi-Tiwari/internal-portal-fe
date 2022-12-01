@@ -15,6 +15,7 @@ import {
 import Navbar from "../navbar/Navbar";
 import "./Dashboard.css";
 import { Box } from "@mui/system";
+import CreateClientAccount from "./CreateClientAccount";
 
 function createData(
   no,
@@ -36,6 +37,23 @@ const rows = [
 const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [openAddAccountDialog, setOpenAddAccountDialog] = useState(false);
+  
+  // HARDCODED - To fetch from DB
+  const clientAccountManagers = ["Robert Baratheon", "Ned Stark", "Daenerys Targaryen"];
+  const clientAccountStatuses = ["Active", "Archived", "Planned"];
+  
+  const handleClickAddAccount = () => {
+    setOpenAddAccountDialog(true);
+  }
+
+  const handleCloseAddAccountDialog = () => {
+    setOpenAddAccountDialog(false);
+  }
+
+  const handleSubmitAddAccountDialog = (clientAccountObject) => {
+    console.log("Client Account Object", clientAccountObject);
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,7 +75,7 @@ const Dashboard = () => {
   };
   const viewEditBtnStyle = {
     backgroundColor: "#5CA7C7",
-     margin: "5px"
+    margin: "5px"
   };
   return (
     <>
@@ -69,9 +87,19 @@ const Dashboard = () => {
         <h1>Client Account Dashboard</h1>
         <hr className="line" />
         <Box display="flex" justifyContent="flex-end">
-          <Button variant="contained" style={btnStyle}>
+          <Button
+            variant="contained"
+            style={btnStyle}
+            onClick={handleClickAddAccount}>
             Add Account
           </Button>
+          <CreateClientAccount
+            open={openAddAccountDialog}
+            onClose={handleCloseAddAccountDialog}
+            onSubmit={handleSubmitAddAccountDialog}
+            clientAccountManagers={clientAccountManagers}
+            clientAccountStatuses={clientAccountStatuses}
+          />
         </Box>
       </div>
       <div className="dashboard-container">
@@ -79,11 +107,11 @@ const Dashboard = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead >
               <TableRow>
-                <TableCell sx={{fontWeight: "bold", fontSize:"large" }} >No</TableCell>
-                <TableCell  sx={{fontWeight: "bold",fontSize:"large"}} align= "center" >Account</TableCell>
-                <TableCell   sx={{fontWeight: "bold",fontSize:"large" }} align= "center">Status</TableCell>
-                <TableCell   sx={{fontSize:"large",fontWeight: "bold"}} align= "center">Assigned to</TableCell>
-                <TableCell sx={{fontWeight: "bold", fontSize:"large" }}align= "center">Action</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} >No</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center" >Account</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Status</TableCell>
+                <TableCell sx={{ fontSize: "large", fontWeight: "bold" }} align="center">Assigned to</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -99,13 +127,13 @@ const Dashboard = () => {
                   <TableCell align="center">{row.status}</TableCell>
                   <TableCell align="center">{row.assignedto}</TableCell>
                   <TableCell align="center">
-                    <Button 
+                    <Button
                       variant="contained"
                       style={viewEditBtnStyle}
                     >
                       {'View Opening'}
                     </Button>
-                    <Button 
+                    <Button
                       variant="contained"
                       style={viewEditBtnStyle}
                     >

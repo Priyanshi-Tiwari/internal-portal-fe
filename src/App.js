@@ -6,7 +6,7 @@ import AccountManager from './components/accountmanager/AccountManager';
 function App() {
   return (
         <div className='App'>
-           <Dashboard/>
+           <Dashboard />
         </div>                            
   ); 
 }
