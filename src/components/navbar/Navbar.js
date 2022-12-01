@@ -1,9 +1,8 @@
 import React from 'react' 
 import AppBar from '@mui/material/AppBar';
-import { Tabs, Toolbar, Typography, Avatar,Stack } from '@mui/material';
+import { Tabs, Toolbar, Typography, Avatar, } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import "./Navbar.css"; 
-import { margin } from '@mui/system';
 
 const Navbar = () => {
     return(

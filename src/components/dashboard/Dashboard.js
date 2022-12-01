@@ -55,6 +55,10 @@ const Dashboard = () => {
       backgroundColor: "none",
     },
   };
+  const viewEditBtnStyle = {
+    backgroundColor: "#5CA7C7",
+     margin: "5px"
+  };
   return (
     <>
       <Navbar />
@@ -73,13 +77,13 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
+            <TableHead >
               <TableRow>
-                <TableCell>No</TableCell>
-                <TableCell align="center">Account</TableCell>
-                <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Assigned to</TableCell>
-                <TableCell align="center">Action</TableCell>
+                <TableCell sx={{fontWeight: "bold", fontSize:"large" }} >No</TableCell>
+                <TableCell  sx={{fontWeight: "bold",fontSize:"large"}} align= "center" >Account</TableCell>
+                <TableCell   sx={{fontWeight: "bold",fontSize:"large" }} align= "center">Status</TableCell>
+                <TableCell   sx={{fontSize:"large",fontWeight: "bold"}} align= "center">Assigned to</TableCell>
+                <TableCell sx={{fontWeight: "bold", fontSize:"large" }}align= "center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -95,15 +99,15 @@ const Dashboard = () => {
                   <TableCell align="center">{row.status}</TableCell>
                   <TableCell align="center">{row.assignedto}</TableCell>
                   <TableCell align="center">
-                    <Button
+                    <Button 
                       variant="contained"
-                      sx={{ backgroundColor: "#5CA7C7", m: "5px" }}
+                      style={viewEditBtnStyle}
                     >
                       {'View Opening'}
                     </Button>
-                    <Button
+                    <Button 
                       variant="contained"
-                      sx={{ backgroundColor: "#5CA7C7" }}
+                      style={viewEditBtnStyle}
                     >
                       {'Edit'}
                     </Button>
