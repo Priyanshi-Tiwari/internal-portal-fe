@@ -8,9 +8,6 @@ const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, c
     const [name, setName] = useState();
     const [accountManager, setAccountManager] = useState();
     const [status, setStatus] = useState("Active");
-    console.log('name', name)
-    console.log('accMan', accountManager)
-    console.log('status', status)
 
     const handleChangeInName = (e) => {
         setName(e.target.value);
@@ -37,33 +34,30 @@ const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, c
     //     onSubmit(clientAccount);
     // }
 
-    const handleSubmit = async() => {
-
+    const handleSubmit = async () => {
         try {
             const response = await axiosInstance({
-              method: "post",
-              url: "/v1/clients-accounts",
-              data: {
-                name: name,
-                account_manager_name: accountManager,
-                status: status
-              
-              },
+                method: "post",
+                url: "/v1/client-accounts",
+                data: {
+                    name: name,
+                    account_manager: accountManager,
+                    status: status
+                },
             });
-    
-          } catch (error) {
+
+        } catch (error) {
             toast.error("Reset Pin Failed", {
-              position: "bottom-center",
-              autoClose: 5000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
             });
-          }
-        
-    
+        }
+        handleClose();
     }
 
     return (
