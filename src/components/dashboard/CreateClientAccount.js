@@ -4,7 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl,
 const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, clientAccountStatuses }) => {
     const [name, setName] = useState();
     const [accountManager, setAccountManager] = useState();
-    const [status, setStatus] = useState("Active");
+    const [status, setStatus] = useState();
 
     const handleChangeInName = (e) => {
         setName(e.target.value);
