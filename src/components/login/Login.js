@@ -1,6 +1,7 @@
 import React from "react";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {useNavigate} from 'react-router-dom';
 import {
     Grid,
     Paper,
@@ -15,6 +16,8 @@ import {
 } from "@mui/material";
 
 import "./Login.css";
+
+
 
 const Login = () => {
     const paperStyle = {
@@ -46,6 +49,8 @@ const Login = () => {
         paddingTop: "50px",
         background: 'linear-gradient(80deg, #87ceeb 26%, #ffffff 22%)'
     };
+
+    const navigate = useNavigate();
 
     return (
         <>
@@ -106,7 +111,7 @@ const Login = () => {
                                     Forget password?
                                 </Link>
                             </Typography>
-                            <Button style={buttonStyle} type="Submit" color="primary" fullWidth variant="contained">
+                            <Button style={buttonStyle} type="Submit" color="primary" fullWidth variant="contained" onClick={() => navigate('/client-accounts')}>
                                 Login
                             </Button>
                         </Paper>
