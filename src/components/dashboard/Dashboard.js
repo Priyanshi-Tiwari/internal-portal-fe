@@ -59,8 +59,28 @@ const Dashboard = () => {
     setOpenAddAccountDialog(false);
   }
 
-  const handleSubmitAddAccountDialog = (clientAccountObject) => {
+  const handleSubmitAddAccountDialog = async(clientAccountObject) => {
     console.log("Client Account Object", clientAccountObject);
+
+    try {
+      const response = await axiosInstance({
+        method: "post",
+        url: "/v1/client-accounts",
+        data: clientAccountObject,
+      });
+
+    } catch (error) {
+      toast.error("Reset Pin Failed", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    handleCloseAddAccountDialog();
   }
 
   const handleChangePage = (event, newPage) => {
@@ -74,12 +94,10 @@ const Dashboard = () => {
     setPage(0);
   };
 
-  const [ accountData, setAccountData ] = useState({})
-    console.log('acc', accountData.allClientAccounts)
+  const [accountData, setAccountData] = useState({})
+  console.log('acc', accountData.allClientAccounts)
 
   const navigate = useNavigate();
-  
-
 
   const btnStyle = {
     backgroundColor: "#5CA7C7",
@@ -90,7 +108,7 @@ const Dashboard = () => {
   };
   const viewEditBtnStyle = {
     backgroundColor: "#5CA7C7",
-     margin: "5px"
+    margin: "5px"
   };
 
   useEffect(() => {
@@ -115,9 +133,6 @@ const Dashboard = () => {
       });
     });
   }, []);
-
-
-
 
   return (
     <>
@@ -146,11 +161,11 @@ const Dashboard = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead >
               <TableRow>
-                <TableCell sx={{fontWeight: "bold", fontSize:"large" }} >No</TableCell>
-                <TableCell  sx={{fontWeight: "bold",fontSize:"large"}} align= "center" >Account</TableCell>
-                <TableCell   sx={{fontWeight: "bold",fontSize:"large" }} align= "center">Status</TableCell>
-                <TableCell   sx={{fontSize:"large",fontWeight: "bold"}} align= "center">Assigned to</TableCell>
-                <TableCell sx={{fontWeight: "bold", fontSize:"large" }}align= "center">Action</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} >No</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center" >Account</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Status</TableCell>
+                <TableCell sx={{ fontSize: "large", fontWeight: "bold" }} align="center">Assigned to</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -163,23 +178,23 @@ const Dashboard = () => {
                     {1}
                   </TableCell>
                   <TableCell align="center">{account?.name}</TableCell>
-                  <TableCell align="center">Active</TableCell>
+                  <TableCell align="center">{account?.status}</TableCell>
                   <TableCell align="center">{account?.account_manager_name}</TableCell>
                   <TableCell align="center">
-                    <Button 
+                    <Button
                       variant="contained"
                       style={viewEditBtnStyle}
-                      onClick = {() => navigate('/account-manager')}
+                      onClick={() => navigate('/account-manager')}
                     >
                       {'View Opening'}
                     </Button>
-                    <Button 
+                    <Button
                       variant="contained"
                       style={viewEditBtnStyle}
                     >
                       {'Edit'}
-                    </Button> 
-                     </TableCell>
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
 
@@ -212,7 +227,7 @@ const Dashboard = () => {
                 </TableRow>
               ))} */}
 
-                
+
             </TableBody>
           </Table>
         </TableContainer>
