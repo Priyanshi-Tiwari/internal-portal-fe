@@ -65,6 +65,7 @@ const AccountManager = () => {
    color: "black",
    backgroundColor:"White",
     margin: "20px",
+    marginRight: "30px",
     "&:hover": {
       backgroundColor: "none",
     }
@@ -78,7 +79,7 @@ const AccountManager = () => {
     };
     const addbtnStyle = {
       float:"right", 
-        marginRight: "50px" ,
+        marginRight: "30px" ,
         backgroundColor:"#5CA7C7",
       "&:hover": {
         backgroundColor: "none",
@@ -91,6 +92,7 @@ const AccountManager = () => {
   return (
     <>
       <Navbar />
+      <div className="main-container">
       <div>
         <p>Home/Account Manager</p>
       </div>
@@ -104,7 +106,7 @@ const AccountManager = () => {
           </Button>
         </Box>
       </div>
-      <div className="dashboard-container">
+      <div className="account-container">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -166,6 +168,8 @@ const AccountManager = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </div>
+      </div>
+    
     </>
   );
 };
