@@ -18,29 +18,8 @@ import {
 import Navbar from "../navbar/Navbar";
 import "./Dashboard.css";
 import { Box } from "@mui/system";
-import CreateClientAccount from "./CreateClientAccount";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
-
-// function createData(
-//   no,
-//   account,
-//   status,
-//   assignedto,
-// ) {
-//   return { no, account, status, assignedto };
-// }
-
-
-
-// const rows = [
-//   createData(1, "AutoDesk", "Active", "John Doe"),
-//   createData(2, "AssetPanda", "Active", "John Doe"),
-//   createData(3, "TechM", "Active", "John Doe"),
-//   createData(4, "GrandRand", "Active", "John Doe"),
-//   createData(5, "RiskCast", "Active", "John Doe"),
-// ];
 
 const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -166,9 +145,9 @@ const Dashboard = () => {
             <TableHead >
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} >No</TableCell>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center" >Account</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Account</TableCell>
                 <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Status</TableCell>
-                <TableCell sx={{ fontSize: "large", fontWeight: "bold" }} align="center">Assigned to</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Assigned to</TableCell>
                 <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Action</TableCell>
               </TableRow>
             </TableHead>
