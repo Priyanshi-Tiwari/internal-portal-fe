@@ -2,3 +2,13 @@
     margin-left: auto;
     display: flex;
 }
+
+.navbar-brand{
+    text-decoration: none;
+    color: #fff;
+}
+
+.logout-wrapper{
+    text-decoration: none;
+    color: #fff;
+}

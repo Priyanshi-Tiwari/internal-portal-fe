@@ -14,6 +14,7 @@ import Navbar from "../navbar/Navbar";
 import "./AccountManager.css";
 import { Box } from "@mui/system";
 
+
 function createData(
   no,
   account,
@@ -83,6 +84,9 @@ const AccountManager = () => {
         backgroundColor: "none",
       }
     };
+
+    
+
     
   return (
     <>
