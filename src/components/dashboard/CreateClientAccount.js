@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
 import axiosInstance from "../../config/axios";
-import { ContactPageSharp } from "@mui/icons-material";
 
 const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, clientAccountStatuses }) => {
     const [name, setName] = useState();
     const [accountManager, setAccountManager] = useState();
-    const [status, setStatus] = useState("Active");
-    console.log('name', name)
-    console.log('accMan', accountManager)
-    console.log('status', status)
+    const [status, setStatus] = useState();
 
     const handleChangeInName = (e) => {
         setName(e.target.value);
@@ -28,43 +23,40 @@ const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, c
         onClose();
     }
 
-    // const handleSubmit = () => {
-    //     const clientAccount = {
-    //         name: name,
-    //         account_manager: accountManager,
-    //         status: status
-    //     };
-    //     onSubmit(clientAccount);
-    // }
-
-    const handleSubmit = async() => {
-
-        try {
-            const response = await axiosInstance({
-              method: "post",
-              url: "/v1/clients-accounts",
-              data: {
-                name: name,
-                account_manager_name: accountManager,
-                status: status
-              
-              },
-            });
-    
-          } catch (error) {
-            toast.error("Reset Pin Failed", {
-              position: "bottom-center",
-              autoClose: 5000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          }
-        
-    
+    const handleSubmit = () => {
+        const clientAccount = {
+            name: name,
+            account_manager: accountManager,
+            status: status
+        };
+        onSubmit(clientAccount);
     }
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         const response = await axiosInstance({
+    //             method: "post",
+    //             url: "/v1/client-accounts",
+    //             data: {
+    //                 name: name,
+    //                 account_manager: accountManager,
+    //                 status: status
+    //             },
+    //         });
+
+    //     } catch (error) {
+    //         toast.error("Reset Pin Failed", {
+    //             position: "bottom-center",
+    //             autoClose: 5000,
+    //             hideProgressBar: true,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //         });
+    //     }
+    //     handleClose();
+    // }
 
     return (
         <>
