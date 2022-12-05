@@ -62,8 +62,8 @@ const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, c
                     onChange={handleChangeInAccountManager}
                     fullWidth
                 >
-                    {clientAccountManagers.map((status, index) =>
-                        <MenuItem key={index} value={status}>{status}</MenuItem>
+                    {clientAccountManagers.map((accountManager, index) =>
+                        <MenuItem key={index} value={accountManager}>{accountManager}</MenuItem>
                     )}
                 </TextField>
                 <TextField
@@ -82,18 +82,18 @@ const CreateClientAccount = ({ open, onClose, onSubmit, clientAccountManagers, c
                 </TextField>
             </DialogContent>
             <DialogActions>
-                <Button 
-                    onClick={handleSubmit} 
+                <Button
+                    onClick={handleSubmit}
                     color="primary"
                     variant="contained"
                     size="large"
-                    style={{backgroundColor: "#5CA7C7"}}>Create</Button>
-                <Button 
-                    onClick={handleClose} 
+                    style={{ backgroundColor: "#5CA7C7" }}>Create</Button>
+                <Button
+                    onClick={handleClose}
                     color="primary"
                     variant="contained"
                     size="large"
-                    style={{backgroundColor: "#5CA7C7"}}>Close</Button>
+                    style={{ backgroundColor: "#5CA7C7" }}>Close</Button>
             </DialogActions>
         </Dialog>
     );
