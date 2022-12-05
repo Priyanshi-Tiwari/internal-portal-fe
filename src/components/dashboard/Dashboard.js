@@ -21,6 +21,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
+
 const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -28,19 +29,24 @@ const Dashboard = () => {
   const [openAddAccountDialog, setOpenAddAccountDialog] = useState(false);
 
   // HARDCODED - To fetch from DB
-  const clientAccountManagers = ["Robert Baratheon", "Ned Stark", "Daenerys Targaryen"];
+  const clientAccountManagers = [
+    "Robert Baratheon",
+    "Ned Stark",
+    "Daenerys Targaryen",
+  ];
   const clientAccountStatuses = ["Active", "Archived", "Planned"];
 
   const handleClickAddAccount = () => {
     setOpenAddAccountDialog(true);
-  }
+  };
 
   const handleCloseAddAccountDialog = () => {
     setOpenAddAccountDialog(false);
-  }
+  };
 
   const handleSubmitAddAccountDialog = async(clientAccountObject) => {
     console.log("Client Account Object", clientAccountObject);
+
 
     try {
       const response = await axiosInstance({
@@ -63,32 +69,39 @@ const Dashboard = () => {
     handleCloseAddAccountDialog();
   }
 
+  };
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event
-  ) => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const [accountData, setAccountData] = useState({})
-  console.log('acc', accountData.allClientAccounts)
+
+  const [accountData, setAccountData] = useState({});
+  console.log("acc", accountData.allClientAccounts);
+
 
   const navigate = useNavigate();
 
   const btnStyle = {
     backgroundColor: "#5CA7C7",
-    margin: "20px",
+    marginRight: "25px",
     "&:hover": {
       backgroundColor: "none",
     },
   };
   const viewEditBtnStyle = {
     backgroundColor: "#5CA7C7",
+
     margin: "5px"
+
+    margin: "5px",
+
   };
 
   useEffect(() => {
@@ -98,7 +111,7 @@ const Dashboard = () => {
         url: `/v1/client-accounts`,
       });
       setAccountData(response.data);
-      console.log('res', response.data)
+      console.log("res", response.data);
     };
 
     fetchData().catch((error) => {
@@ -117,6 +130,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
+
       <div>
         <p>Home/ Client Account Dashboard</p>
       </div>
@@ -178,10 +192,39 @@ const Dashboard = () => {
                       {'Edit'}
                     </Button>
                   </TableCell>
-                </TableRow>
-              ))}
 
-              {/* {rows.map((row) => (
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {accountData?.allClientAccounts?.map((account) => (
+                  <TableRow
+                    key={1}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {1}
+                    </TableCell>
+                    <TableCell align="center">{account?.name}</TableCell>
+                    <TableCell align="center">Active</TableCell>
+                    <TableCell align="center">
+                      {account?.account_manager_name}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="contained"
+                        style={viewEditBtnStyle}
+                        onClick={() => navigate("/account-manager")}
+                      >
+                        {"View Opening"}
+                      </Button>
+                      <Button variant="contained" style={viewEditBtnStyle}>
+                        {"Edit"}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+                {/* {rows.map((row) => (
                 <TableRow
                   key={row.no}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -210,19 +253,20 @@ const Dashboard = () => {
                 </TableRow>
               ))} */}
 
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={accountData?.allClientAccounts?.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
 
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={accountData?.allClientAccounts?.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </div>
     </>
   );

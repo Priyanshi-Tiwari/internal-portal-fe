@@ -2,11 +2,10 @@
     margin-bottom: 65px;
     margin-right: auto;
 }
-
-
 .dashboard-container{
-    margin: 60px;
+    margin-right: 30px;
 }
-.line{
-    margin : 10px;
+
+.main-container{
+    margin-left: "27px" ;
 }
