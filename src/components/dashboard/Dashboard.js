@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
 import axiosInstance from "../../config/axios";
 import CreateClientAccount from "./CreateClientAccount";
 
 import {
-  Typography,
   TableContainer,
   Table,
   TableCell,
@@ -19,7 +17,7 @@ import Navbar from "../navbar/Navbar";
 import "./Dashboard.css";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 const Dashboard = () => {
@@ -44,9 +42,8 @@ const Dashboard = () => {
     setOpenAddAccountDialog(false);
   };
 
-  const handleSubmitAddAccountDialog = async(clientAccountObject) => {
+  const handleSubmitAddAccountDialog = async (clientAccountObject) => {
     console.log("Client Account Object", clientAccountObject);
-
 
     try {
       const response = await axiosInstance({
@@ -55,8 +52,10 @@ const Dashboard = () => {
         data: clientAccountObject,
       });
 
+      console.log(response);
+
     } catch (error) {
-      toast.error("Something went wrong", {
+      toast.error("Error occurred while creating new client account", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: true,
@@ -67,10 +66,8 @@ const Dashboard = () => {
       });
     }
     handleCloseAddAccountDialog();
+    fetchData();
   }
-
-  
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -81,10 +78,8 @@ const Dashboard = () => {
     setPage(0);
   };
 
-
-  const [accountData, setAccountData] = useState({});
-  console.log("acc", accountData.allClientAccounts);
-
+  const [accountsData, setAccountsData] = useState([]);
+  console.log("acc", accountsData);
 
   const navigate = useNavigate();
 
@@ -97,24 +92,19 @@ const Dashboard = () => {
   };
   const viewEditBtnStyle = {
     backgroundColor: "#5CA7C7",
-
     margin: "5px",
-    
-
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       const response = await axiosInstance({
         method: "get",
         url: `/v1/client-accounts`,
       });
-      setAccountData(response.data);
+      setAccountsData(response.data);
       console.log("res", response.data);
-    };
-
-    fetchData().catch((error) => {
-      toast.error("Something went wrong!", {
+    } catch (error) {
+      toast.error("Error fetching client accounts!", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: true,
@@ -123,58 +113,62 @@ const Dashboard = () => {
         draggable: true,
         progress: undefined,
       });
-    });
-  }, [accountData]);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [accountsData.length]);
 
   return (
     <>
       <Navbar />
       <div className="main-container">
-      <div>
-        <p>Home/ Client Account Dashboard</p>
-      </div>
-      <div className="heading-container">
-        <h1>Client Account Dashboard</h1>
-        <hr className="line" />
-        <Box display="flex" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            style={btnStyle}
-            onClick={handleClickAddAccount}>
-            Add Account
-          </Button>
-          <CreateClientAccount
-            open={openAddAccountDialog}
-            onClose={handleCloseAddAccountDialog}
-            onSubmit={handleSubmitAddAccountDialog}
-            clientAccountManagers={clientAccountManagers}
-            clientAccountStatuses={clientAccountStatuses}
-          />
-        </Box>
-      </div>
-      <div className="dashboard-container">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead >
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} >No</TableCell>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Account</TableCell>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Status</TableCell>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Assigned to</TableCell>
-                <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
+        <div>
+          <p>Home/ Client Account Dashboard</p>
+        </div>
+        <div className="heading-container">
+          <h1>Client Account Dashboard</h1>
+          <hr className="line" />
+          <Box display="flex" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              style={btnStyle}
+              onClick={handleClickAddAccount}>
+              Add Account
+            </Button>
+            <CreateClientAccount
+              open={openAddAccountDialog}
+              onClose={handleCloseAddAccountDialog}
+              onSubmit={handleSubmitAddAccountDialog}
+              clientAccountManagers={clientAccountManagers}
+              clientAccountStatuses={clientAccountStatuses}
+            />
+          </Box>
+        </div>
+        <div className="dashboard-container">
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead >
+                <TableRow>
+                  <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} >#</TableCell>
+                  <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Account</TableCell>
+                  <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Status</TableCell>
+                  <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Assigned To</TableCell>
+                  <TableCell sx={{ fontWeight: "bold", fontSize: "large" }} align="center">Action</TableCell>
+                </TableRow>
+              </TableHead>
               <TableBody>
-                {accountData?.allClientAccounts?.map((account) => (
+                {accountsData?.map((account, index) => (
                   <TableRow
-                    key={1}
+                    key={index+1}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {1}
+                      {index+1}
                     </TableCell>
                     <TableCell align="center">{account?.name}</TableCell>
-                    <TableCell align="center">Active</TableCell>
+                    <TableCell align="center">{account?.status}</TableCell>
                     <TableCell align="center">
                       {account?.account_manager_name}
                     </TableCell>
@@ -199,7 +193,7 @@ const Dashboard = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={accountData?.allClientAccounts?.length}
+            count={accountsData?.allClientAccounts?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -207,7 +201,7 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      
+
     </>
   );
 };
