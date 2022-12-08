@@ -13,6 +13,7 @@ import {
 import Navbar from "../navbar/Navbar";
 import "./AccountManager.css";
 import { Box } from "@mui/system";
+import CreateOpening from "./CreateOpening"
 
 
 function createData(
@@ -36,7 +37,7 @@ function createData(
   
 ) {
   return { no, account, JobTitle, PrimarySkill, SecondarySkill,JobCode,
-  Minyears,Maxyears, ofposition, QCallDone, Priority, Timing ,Location, Allocation, UpdateComment  };
+  Minyears,Maxyears, ofposition, QCallDone, Priority, Timing ,Location, Allocation, UpdateComment};
 }
 
 const rows = [
@@ -49,6 +50,19 @@ const rows = [
 const AccountManager = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [openAddOpeningDialog, setOpenAddOpeningDialog] = useState(false);
+
+  const handleClickAddOpening = () =>{
+    setOpenAddOpeningDialog(true);
+
+  }
+  const handleCloseAddOpeningtDialog = () => {
+    setOpenAddOpeningDialog(false);
+  };
+
+  const handleSubmitAddOpeningDialog = (AccountManagerObject) => {
+    console.log("Account Manager Object", AccountManagerObject);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,6 +75,12 @@ const AccountManager = () => {
     setPage(0);
   };
 
+  
+  const tableStyle = {
+      borderCollapse: 'separate',
+      borderSpacing: '0px 16px',
+      backgroundColor: '#f8fafb',
+  };
   const btnStyle = {
    color: "black",
    backgroundColor:"White",
@@ -96,7 +116,19 @@ const AccountManager = () => {
       <div>
         <p>Home/Account Manager</p>
       </div>
-      <Button variant="contained" style={addbtnStyle}>Add Opening</Button>
+      <Box>
+      <Button variant="contained"
+       style={addbtnStyle}
+       onClick={handleClickAddOpening}
+      >
+        Add Opening
+        </Button>
+        <CreateOpening
+              open={openAddOpeningDialog}
+              onClose={handleCloseAddOpeningtDialog}
+              onSubmit={handleSubmitAddOpeningDialog}
+            />
+      </Box>
       <div style={ headingStyle}>
         <h1>Account Manager</h1>
         <hr className="line" />
@@ -108,7 +140,7 @@ const AccountManager = () => {
       </div>
       <div className="account-container">
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} style={tableStyle}  aria-label="simple table">
             <TableHead>
               <TableRow >
                 <TableCell sx={{fontWeight: "bold", fontSize:"large" }}  align="center">No</TableCell>
@@ -132,27 +164,25 @@ const AccountManager = () => {
               {rows.map((row) => (
                 <TableRow
                   key={row.no}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 }, "td, th": {borderTop: '1px solid #e0e0e0', backgroundColor: 'white'}}}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell  component="th" scope="row">
                     {row.no}
                   </TableCell>
-                  <TableCell className="MuiTableCell">{row.account}</TableCell>
+                  <TableCell  className="MuiTableCell">{row.account}</TableCell>
                   <TableCell>{row.JobTitle}</TableCell>
                 <TableCell >{row.PrimarySkill}</TableCell>
                 <TableCell>{row.SecondarySkill}</TableCell>
-                <TableCell >{row.JobCode}</TableCell>
-                <TableCell >{row.Minyears}</TableCell>
-                <TableCell >{row.Maxyears}</TableCell>
+                <TableCell>{row.JobCode}</TableCell>
+                <TableCell>{row.Minyears}</TableCell>
+                <TableCell>{row.Maxyears}</TableCell>
                 <TableCell >{row.ofposition}</TableCell>
                 <TableCell >{row.CallDone}?</TableCell>
                 <TableCell>{row.Priority}</TableCell>
                 <TableCell>{row.Timing}</TableCell>
                 <TableCell>{row.Location}</TableCell>
                 <TableCell >{row.Allocation}</TableCell>
-                <TableCell>{row.Update}</TableCell>
-                <TableCell>{row.Comment}</TableCell>
-                 
+                <TableCell>{row.UpdateComment}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
