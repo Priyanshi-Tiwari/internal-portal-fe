@@ -1,13 +1,13 @@
 import './App.css';
-import Login from "./components/login/Login";
-import Dashboard from './components/dashboard/Dashboard';
-import AccountManager from './components/accountmanager/AccountManager';
+import Login from "./components/pages/login/Login";
+import Dashboard from './components/pages/dashboard/Dashboard';
+import AccountManager from './components/pages/accountmanager/AccountManager';
 import { Route, Routes, Navigate } from "react-router-dom";
 
 
 function App() {
   return (
-    <div className='App'>
+    <div className='App' style={  {backgroundColor: "#f8fafb"}}>
 
       <Routes>
         <Route path="/login" element={<Login />} />

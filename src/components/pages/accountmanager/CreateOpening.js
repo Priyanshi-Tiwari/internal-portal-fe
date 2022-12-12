@@ -12,13 +12,12 @@ function CreateOpening({ open, onClose, onSubmit }) {
   };
   const handleSubmit = () => {
     const accountManager = {
-      account_manager: accountManager,
     };
     onSubmit(accountManager);
   };
 
   return (
-    <div>
+    <>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -150,7 +149,7 @@ function CreateOpening({ open, onClose, onSubmit }) {
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
 
