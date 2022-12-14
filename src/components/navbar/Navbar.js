@@ -11,7 +11,7 @@ const Navbar = () => {
         <AppBar  position="static" sx={{background: "#5CA7C7"}}>
             <Toolbar>
             <a href='/client-accounts' className="navbar-brand">
-            <Typography sx={{fontSize: "30px"}}>
+            <Typography sx={{fontSize: "45px"}}>
                 Carnera
             </Typography>
             </a>

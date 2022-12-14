@@ -9,10 +9,13 @@ import {
   TablePagination,
   Paper,
   Button,
+  Card, CardContent ,
+  Grid
 } from "@mui/material";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../../navbar/Navbar";
 import "./AccountManager.css";
-import { Box } from "@mui/system";
+import { Box} from "@mui/system";
+import CreateOpening from "./CreateOpening"
 
 
 function createData(
@@ -36,7 +39,7 @@ function createData(
   
 ) {
   return { no, account, JobTitle, PrimarySkill, SecondarySkill,JobCode,
-  Minyears,Maxyears, ofposition, QCallDone, Priority, Timing ,Location, Allocation, UpdateComment  };
+  Minyears,Maxyears, ofposition, QCallDone, Priority, Timing ,Location, Allocation, UpdateComment};
 }
 
 const rows = [
@@ -49,6 +52,19 @@ const rows = [
 const AccountManager = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [openAddOpeningDialog, setOpenAddOpeningDialog] = useState(false);
+
+  const handleClickAddOpening = () =>{
+    setOpenAddOpeningDialog(true);
+
+  }
+  const handleCloseAddOpeningtDialog = () => {
+    setOpenAddOpeningDialog(false);
+  };
+
+  const handleSubmitAddOpeningDialog = (AccountManagerObject) => {
+    console.log("Account Manager Object", AccountManagerObject);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,25 +77,24 @@ const AccountManager = () => {
     setPage(0);
   };
 
+  
+  const tableStyle = {
+      borderCollapse: 'separate',
+      borderSpacing: '0px 10px',
+      padding: "0 10px",
+      backgroundColor: '#f8fafb',
+  };
   const btnStyle = {
    color: "black",
    backgroundColor:"White",
-    margin: "20px",
     marginRight: "30px",
+    marginLeft: "16px",
     "&:hover": {
       backgroundColor: "none",
     }
   };
-    const headingStyle ={
-      marginbottom: "65px",
-      marginright: "auto",
-      "&:hover": {
-        backgroundColor: "none",
-      }
-    };
-    const addbtnStyle = {
-      float:"right", 
-        marginRight: "30px" ,
+   
+    const addbtnStyle = { 
         backgroundColor:"#5CA7C7",
       "&:hover": {
         backgroundColor: "none",
@@ -93,25 +108,36 @@ const AccountManager = () => {
     <>
       <Navbar />
       <div className="main-container">
-      <div>
-        <p>Home/Account Manager</p>
-      </div>
-      <Button variant="contained" style={addbtnStyle}>Add Opening</Button>
-      <div style={ headingStyle}>
-        <h1>Account Manager</h1>
-        <hr className="line" />
-        <Box display="flex" justifyContent="flex-end">
-          <Button variant="contained" style={btnStyle}>
+        <div className="heading-left-container">
+        <span className="heading">
+        Account Manager
+        </span>
+        <div className="heading-right-container">
+      <Button variant="contained"
+       style={addbtnStyle}
+       onClick={handleClickAddOpening}
+      >
+        Add Opening
+        </Button>
+        <CreateOpening
+              open={openAddOpeningDialog}
+              onClose={handleCloseAddOpeningtDialog}
+              onSubmit={handleSubmitAddOpeningDialog}
+            />
+            <Button variant="contained" style={btnStyle}>
            View Archived
           </Button>
-        </Box>
+          </div>
+        </div>
+      <div>
+        <hr className="line" />
       </div>
       <div className="account-container">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow >
-                <TableCell sx={{fontWeight: "bold", fontSize:"large" }}  align="center">No</TableCell>
+        <TableContainer>
+          <Table sx={{ minWidth: 650 }} style={tableStyle}  aria-label="simple table">
+            <TableHead sx={{boxShadow: "0px 0px 5px #978585"}}>
+              <TableRow sx={{ "td, th": {borderTop: '1px solid #f8fafb', backgroundColor: 'white'}}}>
+                <TableCell sx={{fontWeight: "bold", fontSize:"large"}}  align="center">No</TableCell>
                 <TableCell sx={{fontWeight: "bold", fontSize:"large" }}  align="center">Account</TableCell>
                 <TableCell sx={{fontWeight: "bold", fontSize:"large" }}  align="center">Job Title</TableCell>
                 <TableCell sx={{fontWeight: "bold", fontSize:"large" }}  align="center">Primary Skill</TableCell>
@@ -130,29 +156,37 @@ const AccountManager = () => {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <TableRow
+                <TableRow 
                   key={row.no}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{boxShadow: "0px 0px 5px #978585","&:last-child td, &:last-child th": { border: 0 }, "td, th": {borderTop: '1px solid #f8fafb', backgroundColor: 'white'}}}
                 >
-                  <TableCell component="th" scope="row">
+                    <TableCell  component="th" scope="row" >
+                  <span>
                     {row.no}
+                    </span>
                   </TableCell>
-                  <TableCell className="MuiTableCell">{row.account}</TableCell>
-                  <TableCell>{row.JobTitle}</TableCell>
-                <TableCell >{row.PrimarySkill}</TableCell>
-                <TableCell>{row.SecondarySkill}</TableCell>
-                <TableCell >{row.JobCode}</TableCell>
-                <TableCell >{row.Minyears}</TableCell>
-                <TableCell >{row.Maxyears}</TableCell>
-                <TableCell >{row.ofposition}</TableCell>
-                <TableCell >{row.CallDone}?</TableCell>
-                <TableCell>{row.Priority}</TableCell>
-                <TableCell>{row.Timing}</TableCell>
-                <TableCell>{row.Location}</TableCell>
-                <TableCell >{row.Allocation}</TableCell>
-                <TableCell>{row.Update}</TableCell>
-                <TableCell>{row.Comment}</TableCell>
-                 
+                  <TableCell  className="MuiTableCell">
+                  <span>
+                    {row.account}
+                    </span>
+                    </TableCell>
+                  <TableCell>
+                  <span>
+                    {row.JobTitle}
+                    </span>
+                    </TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.PrimarySkill}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.SecondarySkill}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }} >{row.JobCode}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.Minyears}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.Maxyears}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.ofposition}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.CallDone}?</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.Priority}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.Timing}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.Location}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }} >{row.Allocation}</TableCell>
+                <TableCell sx={{ fontSize:"medium" }}>{row.UpdateComment}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
